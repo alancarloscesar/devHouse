@@ -52,7 +52,26 @@ class HouseController {
         return res.json({
             sucess: "house atualizada!"
         })
+    }
 
+    async destroy(req, res) {
+
+        const { house_id } = req.query
+
+        if (res.status(400)) {
+            return res.json({
+                error: "Id incorreto ou inválido!"
+            })
+        }
+
+        await Houses.deleteOne({
+            house_id
+        })
+
+
+        return res.json({
+            sucess: "House delete sucess"
+        })
     }
 }
 
