@@ -1,0 +1,510 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API - DevHouse",
+        "description": "Documentaçäo da API DevHouse",
+        "termsOfService": "Termos em produçáo...",
+        "contact": {
+            "email": "alancarloscesar@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3333/",
+            "description": "API de desenvolvimento"
+        },
+        {
+            "url": "http://localhost:3333/prod",
+            "description": "API de proudução"
+        }
+    ],
+    "paths": {
+        "/session": {
+            "post": {
+                "summary": "Login na aplicação com email.",
+                "description": "Rota responsável por logar usuário na aplicação",
+                "tags": [
+                    "User"
+                ],
+                "requestBody": {
+                    "content": {
+                        "aplication/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            },
+                            "examples": {
+                                "user": {
+                                    "value": {
+                                        "_id": "123545636avcs",
+                                        "emai": "alancarloscesar@gmail.com"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "401": {
+                        "description": "Unaltorized"
+                    },
+                    "400": {
+                        "description": "Preencha o campo user!"
+                    },
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "aplication/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/houses": {
+            "post": {
+                "summary": "Cadastro de casas no mongoDb",
+                "description": "Rota para cadastro de casas",
+                "tags": [
+                    "House"
+                ],
+                "requestBody": {
+                    "content": {
+                        "aplication/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/House"
+                            },
+                            "examples": {
+                                "house": {
+                                    "value": {
+                                        "_id": "123545636avcs",
+                                        "thumbnail": "housemedium-1671585495668.jpg",
+                                        "description": "Apartamento espaçoso para aluguel.",
+                                        "price": 500,
+                                        "location": "Avenida beira mar - 504",
+                                        "status": true
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "aplication/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/House"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/houses/list": {
+            "get": {
+                "summary": "Lista houses por status(true ou false)",
+                "description": "Rota para listar houses por status(query params)",
+                "tags": [
+                    "House"
+                ],
+                "parameters": [
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "status true ou false para busca das houses"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "aplication/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/House"
+                                },
+                                "examples": {
+                                    "houseList": {
+                                        "value": {
+                                            "_id": "123545636avcs",
+                                            "thumbnail": "housemedium-1671585495668.jpg",
+                                            "description": "Apartamento espaçoso para aluguel.",
+                                            "price": 500,
+                                            "location": "Avenida beira mar - 504",
+                                            "status": true,
+                                            "user": "63a2598f67d28f6d03e67a84"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/houses/{house_id}": {
+            "put": {
+                "summary": "Alterar uma casa por house_id",
+                "description": "Rota para alterar uma casa através de parametros (house_id)",
+                "tags": [
+                    "House"
+                ],
+                "parameters": [
+                    {
+                        "name": "house_id",
+                        "in": "path",
+                        "description": "altera dados de uma casa por house_id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "aplication/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/House"
+                                },
+                                "examples": {
+                                    "houseList": {
+                                        "value": {
+                                            "_id": "123545636avcs",
+                                            "thumbnail": "housemedium-1671585495668.jpg",
+                                            "description": "Apartamento espaçoso para aluguel.",
+                                            "price": 500,
+                                            "location": "Avenida beira mar - 504",
+                                            "status": true,
+                                            "user": "63a2598f67d28f6d03e67a84"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/houses/cancel": {
+            "delete": {
+                "summary": "Deletar uma casa pelo house_id",
+                "description": "Rota para deletar uma casa através de parametros (house_id)",
+                "tags": [
+                    "House"
+                ],
+                "parameters": [
+                    {
+                        "name": "house_id",
+                        "in": "query",
+                        "description": "deleta dados de uma casa por house_id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "House delete sucess",
+                        "content": {
+                            "aplication/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/House"
+                                },
+                                "examples": {
+                                    "houseList": {
+                                        "value": {
+                                            "Message": "House delete sucess"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Id incorreto ou inválido!",
+                        "aplication/json": {
+                            "schema": {
+                                "type": "object",
+                                "error": "Id incorreto ou inválido!"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/dashboard": {
+            "get": {
+                "summary": "Listar todas as casas por user_id",
+                "description": "Rota para listar e mostrar dados através de parametros (user_id)",
+                "tags": [
+                    "Dashboard"
+                ],
+                "parameters": [
+                    {
+                        "name": "user_id",
+                        "in": "header",
+                        "description": "parametro user_id sendo passado por header"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "aplication/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/House"
+                                },
+                                "examples": {
+                                    "houseList": {
+                                        "value": {
+                                            "_id": "63a25ed7d7d89f86d99b57a6",
+                                            "thumbnail": "coca cola-1671586484554.jpg",
+                                            "description": "Apartamento grande 2",
+                                            "price": 1234,
+                                            "location": "Avenida teste, 400",
+                                            "status": false,
+                                            "user": "63a2598f67d28f6d03e67a84"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/reserve/{house_id}/reserve": {
+            "post": {
+                "summary": "Reservar uma casa por house_id",
+                "description": "Rota para reservar uma casa através de parametros (house_id)",
+                "tags": [
+                    "Reserve"
+                ],
+                "requestBody": {
+                    "content": {
+                        "aplication/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Reserve"
+                            },
+                            "examples": {
+                                "houseList": {
+                                    "value": {
+                                        "date": "25 de dezembro"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "house_id",
+                        "in": "path",
+                        "description": "reserva uma casa por house_id"
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "header",
+                        "description": "passando user_id do header"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Populate house e user",
+                        "content": {
+                            "aplication/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Reserve"
+                                },
+                                "examples": {
+                                    "houseList": {
+                                        "value": {
+                                            "_id": "63a4deb008be16063989b9d2",
+                                            "date": "25 de dezembro",
+                                            "user": "63a2598f67d28f6d03e67a84",
+                                            "house": {
+                                                "_id": "63a25ed7d7d89f86d99b57a6",
+                                                "thumbnail": "coca cola-1671586484554.jpg",
+                                                "description": "Apartamento grande 2",
+                                                "price": 1234,
+                                                "location": "Avenida teste, 400",
+                                                "status": false,
+                                                "user": "63a2598f67d28f6d03e67a84"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erros - Bad Request",
+                        "content": {
+                            "aplication/json": {
+                                "examples": {
+                                    "houseMessage": {
+                                        "description": "Se não encontrar ou a casa for passada de forma incorreta.",
+                                        "value": {
+                                            "error": "Casa näo encontrada!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "content": {
+                            "aplication/json": {
+                                "examples": {
+                                    "401 - Status": {
+                                        "description": "Se o status for true",
+                                        "value": {
+                                            "error": "Solicitação não permitida"
+                                        }
+                                    },
+                                    "401 - User": {
+                                        "description": "Se o user que estiver solicitando for o mesmo da house",
+                                        "value": {
+                                            "error": "Você não pode reservar sua própria casa."
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/reserve/cancel": {
+            "delete": {
+                "summary": "Cancelar/Deletar uma reserva",
+                "description": "Rota para Cancelar/Deletar uma reserva através de (reserve_id)",
+                "tags": [
+                    "Reserve"
+                ],
+                "requestBody": {
+                    "content": {
+                        "aplication/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Reserve"
+                            },
+                            "examples": {
+                                "house": {
+                                    "value": {
+                                        "reserve_id": "123545636avcs"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "aplication/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schemas/Reserve"
+                                },
+                                "examples": {
+                                    "houseDeleted": {
+                                        "value": {
+                                            "deleted": "Reserva deletada com sucesso!"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "User": {
+                "type": "object",
+                "properties": {
+                    "_id": {
+                        "type": "auto_increment"
+                    },
+                    "email": {
+                        "type": "string"
+                    }
+                }
+            },
+            "House": {
+                "type": "object",
+                "properties": {
+                    "_id": {
+                        "type": "auto_increment"
+                    },
+                    "thumbnail": {
+                        "type": "file"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "price": {
+                        "type": "number"
+                    },
+                    "location": {
+                        "type": "string"
+                    },
+                    "status": {
+                        "type": "boolean"
+                    },
+                    "user": {
+                        "type": "string"
+                    }
+                }
+            },
+            "Reserve": {
+                "type": "object",
+                "properties": {
+                    "_id": {
+                        "type": "auto_increment"
+                    },
+                    "date": {
+                        "type": "string"
+                    },
+                    "user": {
+                        "type": "string"
+                    },
+                    "house": {
+                        "_id": {
+                            "type": "string"
+                        },
+                        "thumbnail": {
+                            "type": "string"
+                        },
+                        "description": {
+                            "type": "string"
+                        },
+                        "price": {
+                            "type": "number"
+                        },
+                        "location": {
+                            "type": "string"
+                        },
+                        "status": {
+                            "type": "boolean"
+                        },
+                        "user": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -17,9 +17,9 @@ const upload = multer(uploadConfig)
 
 router.post('/session', SessionController.store)
 router.post('/houses', upload.single('thumbnail'), HouseController.store)
-router.get('/houses', HouseController.index)
+router.get('/houses/list', HouseController.index)
 router.put('/houses/:house_id', upload.single('thumbnail'), HouseController.update)
-router.delete('/houses', HouseController.destroy)
+router.delete('/houses/delete', HouseController.destroy)
 
 router.get('/dashboard', DashboardController.show)
 

@@ -18,7 +18,6 @@ class ReserveController {
             })
         }
 
-
         if (!house) {
             return res.status(400).json({
                 error: "Casa näo encontrada!"
